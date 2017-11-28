@@ -2,7 +2,7 @@
 #include <iostream>
 #include <pj/file_access.h>
 
-#include "json/json.h"
+#include "pjsua2_server.h"
 
 #define THIS_FILE 	"pjsua2_demo.cpp"
 
@@ -302,6 +302,11 @@ static void mainProg4(Endpoint &ep) throw(Error)
     ep.libStart();
     std::cout << "*** PJSUA2 STARTED ***" << std::endl;
 
+	Pjsua2_Server server;
+	server.start();
+	std::cout << "Press ENTER to quit..." << std::endl;
+	std::cin.get();
+
     // Just wait for ENTER key
     std::cout << "Press ENTER to quit..." << std::endl;
     std::cin.get();
@@ -319,6 +324,7 @@ int main()
 	ep.libCreate();
 
 	mainProg4(ep);
+
 	ret = PJ_SUCCESS;
     } catch (Error & err) {
 	std::cout << "Exception: " << err.info() << std::endl;
