@@ -533,7 +533,7 @@ PJ_DEF(pj_status_t) pj_thread_create( pj_pool_t *pool,
 			        thread_main, rec,
 			        dwflags, &rec->idthread);
 #endif
-
+	PJ_LOG(3, (rec->obj_name, "Thread created rec=%p hthread=%p", rec, rec->hthread));
     if (rec->hthread == NULL)
 	return PJ_RETURN_OS_ERROR(GetLastError());
 
@@ -637,6 +637,7 @@ PJ_DEF(pj_status_t) pj_thread_destroy(pj_thread_t *p)
     PJ_CHECK_STACK();
     PJ_ASSERT_RETURN(p, PJ_EINVAL);
 
+	PJ_LOG(3, (rec->obj_name, "Thread destroy rec=%p hthread=%p", rec, rec->hthread));
     if (CloseHandle(rec->hthread) == TRUE)
         return PJ_SUCCESS;
     else

@@ -3,91 +3,13 @@
 #include <pj/file_access.h>
 
 #include "pjsua2_server.h"
+#include "pjsua2_account.h"
+#include "pjsua2_call.h"
+
 
 #define THIS_FILE 	"pjsua2_demo.cpp"
 
 using namespace pj;
-
-class MyAccount;
-
-class MyCall : public Call
-{
-private:
-    MyAccount *myAcc;
-
-public:
-    MyCall(Account &acc, int call_id = PJSUA_INVALID_ID)
-    : Call(acc, call_id)
-    {
-        myAcc = (MyAccount *)&acc;
-    }
-    
-    virtual void onCallState(OnCallStateParam &prm);
-};
-
-class MyAccount : public Account
-{
-public:
-    std::vector<Call *> calls;
-    
-public:
-    MyAccount()
-    {}
-
-    ~MyAccount()
-    {
-        std::cout << "*** Account is being deleted: No of calls="
-                  << calls.size() << std::endl;
-    }
-    
-    void removeCall(Call *call)
-    {
-        for (std::vector<Call *>::iterator it = calls.begin();
-             it != calls.end(); ++it)
-        {
-            if (*it == call) {
-                calls.erase(it);
-                break;
-            }
-        }
-    }
-
-    virtual void onRegState(OnRegStateParam &prm)
-    {
-	AccountInfo ai = getInfo();
-	std::cout << (ai.regIsActive? "*** Register: code=" : "*** Unregister: code=")
-		  << prm.code << std::endl;
-    }
-    
-    virtual void onIncomingCall(OnIncomingCallParam &iprm)
-    {
-        Call *call = new MyCall(*this, iprm.callId);
-        CallInfo ci = call->getInfo();
-        CallOpParam prm;
-        
-        std::cout << "*** Incoming Call: " <<  ci.remoteUri << " ["
-                  << ci.stateText << "]" << std::endl;
-        
-        calls.push_back(call);
-        prm.statusCode = (pjsip_status_code)200;
-        call->answer(prm);
-    }
-};
-
-void MyCall::onCallState(OnCallStateParam &prm)
-{
-    PJ_UNUSED_ARG(prm);
-
-    CallInfo ci = getInfo();
-    std::cout << "*** Call: " <<  ci.remoteUri << " [" << ci.stateText
-              << "]" << std::endl;
-    
-    if (ci.state == PJSIP_INV_STATE_DISCONNECTED) {
-        myAcc->removeCall(this);
-        /* Delete the call */
-        delete this;
-    }
-}
 
 static void mainProg1(Endpoint &ep) throw(Error)
 {
@@ -111,13 +33,13 @@ static void mainProg1(Endpoint &ep) throw(Error)
     acc_cfg.regConfig.registrarUri = "sip:sip.pjsip.org";
     acc_cfg.sipConfig.authCreds.push_back( AuthCredInfo("digest", "*",
                                                         "test1", 0, "test1") );
-    MyAccount *acc(new MyAccount);
+    Pjsua2_Account *acc(new Pjsua2_Account);
     acc->create(acc_cfg);
     
     pj_thread_sleep(2000);
     
     // Make outgoing call
-    Call *call = new MyCall(*acc);
+    Call *call = new Pjsua2_Call(*acc);
     acc->calls.push_back(call);
     CallOpParam prm(true);
     prm.opt.audioCount = 1;
@@ -295,7 +217,7 @@ static void mainProg4(Endpoint &ep) throw(Error)
 	acc_cfg.regConfig.registrarUri = "sip:120.27.249.129";
 	AuthCredInfo cred("digest", "*", "1021", 0, "123456");
 	acc_cfg.sipConfig.authCreds.push_back(cred);
-    MyAccount *acc(new MyAccount);
+    Pjsua2_Account *acc(new Pjsua2_Account);
     acc->create(acc_cfg);
 
     // Start library

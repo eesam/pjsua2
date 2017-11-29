@@ -18,8 +18,9 @@ public:
 
 	virtual int main();
 private:
+	bool            m_running;
 	Pjlib           m_pj_lib;
-    Pj_Caching_Pool m_pj_caching_pool;
-    Pj_Pool         m_pj_pool;
+	Pj_Caching_Pool m_pj_caching_pool;
+	Pj_Pool         m_pj_pool;
 	Pj_Sock_Stream  m_pj_sock;
 };

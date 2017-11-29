@@ -215,6 +215,7 @@ public:
     pj_status_t close()
     {
 	pj_sock_close(sock_);
+	return PJ_SUCCESS;
     }
 
     //
