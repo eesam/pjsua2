@@ -513,6 +513,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\pjsua2\main.cpp" />
     <ClCompile Include="..\src\pjsua2\pjsua2_demo.cpp" />
     <ClCompile Include="..\src\pjsua2\pjsua2_server.cpp" />
   </ItemGroup>

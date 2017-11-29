@@ -315,36 +315,36 @@ static void mainProg4(Endpoint &ep) throw(Error)
 }
 
 
-int main()
-{
-    int ret = 0;
-    Endpoint ep;
+// int main()
+// {
+//     int ret = 0;
+//     Endpoint ep;
 
-    try {
-	ep.libCreate();
+//     try {
+// 	ep.libCreate();
 
-	mainProg4(ep);
+// 	mainProg4(ep);
 
-	ret = PJ_SUCCESS;
-    } catch (Error & err) {
-	std::cout << "Exception: " << err.info() << std::endl;
-	ret = 1;
-    }
+// 	ret = PJ_SUCCESS;
+//     } catch (Error & err) {
+// 	std::cout << "Exception: " << err.info() << std::endl;
+// 	ret = 1;
+//     }
 
-    try {
-	ep.libDestroy();
-    } catch(Error &err) {
-	std::cout << "Exception: " << err.info() << std::endl;
-	ret = 1;
-    }
+//     try {
+// 	ep.libDestroy();
+//     } catch(Error &err) {
+// 	std::cout << "Exception: " << err.info() << std::endl;
+// 	ret = 1;
+//     }
 
-    if (ret == PJ_SUCCESS) {
-	std::cout << "Success" << std::endl;
-    } else {
-	std::cout << "Error Found" << std::endl;
-    }
+//     if (ret == PJ_SUCCESS) {
+// 	std::cout << "Success" << std::endl;
+//     } else {
+// 	std::cout << "Error Found" << std::endl;
+//     }
 
-    return ret;
-}
+//     return ret;
+// }
 
 

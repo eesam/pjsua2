@@ -197,6 +197,7 @@ public:
             Pj_Thread_API::destroy(thread_);
             thread_ = NULL;
         }
+		return PJ_SUCCESS;
     }
 
 protected:
