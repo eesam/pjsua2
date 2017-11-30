@@ -21,7 +21,6 @@ bool Pjsua2_ClientSend::start(Pj_Sock_Stream* sock)
 		PJ_LOG(3, ("ClientSend", "Pjsua2_ClientSend start create semaphore failed %d", ret));
 		return false;
 	}
-
 	m_running = true;
 	ret = create(&m_pj_pool, 0);
 	if (ret != PJ_SUCCESS) {
@@ -36,9 +35,10 @@ bool Pjsua2_ClientSend::start(Pj_Sock_Stream* sock)
 void Pjsua2_ClientSend::stop()
 {
 	m_running = false;
+	m_pj_semaphore.post();
+
 	join();
 	destroy();
-
 	m_pj_semaphore.destroy();
 	PJ_LOG(3, ("ClientSend", "Pjsua2_ClientSend stop end"));
 }
@@ -46,8 +46,11 @@ void Pjsua2_ClientSend::stop()
 int Pjsua2_ClientSend::main()
 {
 	while (m_running) {
-		PJ_LOG(3, ("ClientSend", "send thread wait..."));
-		m_pj_semaphore.wait();
+		pj_status_t ret = m_pj_semaphore.wait();
+		if (ret != PJ_SUCCESS) {
+			PJ_LOG(3, ("ClientSend", "send thread wait ret=%d", ret));
+			break;
+		}
 
 		// TODO
 		PJ_LOG(3, ("ClientSend", "send data..."));

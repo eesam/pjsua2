@@ -14,4 +14,5 @@ public:
 private:
 	Pjsua2_ClientRecv m_client_recv;
 	Pjsua2_ClientSend m_client_send;
+	Pj_Sock_Stream*   m_pj_sock;
 };

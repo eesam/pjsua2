@@ -2,6 +2,7 @@
 #include "pjsua2_client.h"
 #include <pj/log.h>
 #include <winsock2.h>
+#include <list>
 
 Pjsua2_Server::Pjsua2_Server()
 {
@@ -60,19 +61,28 @@ int Pjsua2_Server::main()
 		return -1;
 	}
 
+	std::list<Pjsua2_Client*> list_client;
 	while (m_running) {
 		PJ_LOG(3, ("pjsua2_server", "Pjsua2_Server accept"));
-		Pj_Sock_Stream newsock = m_pj_sock.accept();
-		if (newsock.get_handle() == -1) {
+		Pj_Sock_Stream sock = m_pj_sock.accept();
+		if (sock.get_handle() == -1) {
 			PJ_LOG(3, ("pjsua2_server", "Pjsua2_Server accept failed"));
 			break;
 		}
 
+		Pj_Sock_Stream newsock = sock;
+		PJ_LOG(3, ("pjsua2_server", "Pjsua2_Server newsock %d", newsock.get_handle()));
 		Pjsua2_Client *client = new Pjsua2_Client();
 		client->start(&newsock);
+		list_client.push_back(client);
 		//Pj_Inet_Addr peer_addr;
 		//ret = newsock.getpeername(&peer_addr);
 		//PJ_LOG(3, ("pjsua2_server", "ret %d. come newsock %s:%d", ret, peer_addr.get_address(), peer_addr.get_port_number()));
+	}
+
+	std::list<Pjsua2_Client*>::iterator iter = list_client.begin();
+	for (; iter != list_client.end(); ++iter) {
+		delete *iter;
 	}
 	return 0;
 }

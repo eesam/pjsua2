@@ -556,7 +556,7 @@ public:
                         unsigned initial = 0, const char *name = NULL )
     {
         destroy();
-	return pj_sem_create( pool->pool_(), name, initial, max, &sem_);
+		return pj_sem_create( pool->pool_(), name, initial, max, &sem_);
     }
 
     //
@@ -575,7 +575,7 @@ public:
     //
     pj_sem_t *pj_sem_t_()
     {
-	return (pj_sem_t*)this;
+	return sem_;
     }
 
     //
