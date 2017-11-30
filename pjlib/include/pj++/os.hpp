@@ -527,6 +527,10 @@ private:
 class Pj_Semaphore : public Pj_Object
 {
 public:
+	Pj_Semaphore()
+		: sem_(NULL)
+	{
+	}
     //
     // Construct semaphore
     //

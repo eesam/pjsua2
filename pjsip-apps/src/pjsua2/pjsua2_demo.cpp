@@ -35,9 +35,9 @@ static void mainProg1(Endpoint &ep) throw(Error)
                                                         "test1", 0, "test1") );
     Pjsua2_Account *acc(new Pjsua2_Account);
     acc->create(acc_cfg);
-    
+
     pj_thread_sleep(2000);
-    
+
     // Make outgoing call
     Call *call = new Pjsua2_Call(*acc);
     acc->calls.push_back(call);
@@ -45,12 +45,12 @@ static void mainProg1(Endpoint &ep) throw(Error)
     prm.opt.audioCount = 1;
     prm.opt.videoCount = 0;
     call->makeCall("sip:test1@pjsip.org", prm);
-    
+
     // Hangup all calls
     pj_thread_sleep(8000);
     ep.hangupAllCalls();
     pj_thread_sleep(4000);
-    
+
     // Destroy library
     std::cout << "*** PJSUA2 SHUTTING DOWN ***" << std::endl;
     delete call;

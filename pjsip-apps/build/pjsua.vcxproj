@@ -516,12 +516,20 @@
     <ClCompile Include="..\src\pjsua2\main.cpp" />
     <ClCompile Include="..\src\pjsua2\pjsua2_account.cpp" />
     <ClCompile Include="..\src\pjsua2\pjsua2_call.cpp" />
+    <ClCompile Include="..\src\pjsua2\pjsua2_client.cpp" />
+    <ClCompile Include="..\src\pjsua2\pjsua2_client_recv.cpp" />
+    <ClCompile Include="..\src\pjsua2\pjsua2_client_send.cpp" />
     <ClCompile Include="..\src\pjsua2\pjsua2_demo.cpp" />
+    <ClCompile Include="..\src\pjsua2\pjsua2_handle.cpp" />
     <ClCompile Include="..\src\pjsua2\pjsua2_server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\pjsua2\pjsua2_account.h" />
     <ClInclude Include="..\src\pjsua2\pjsua2_call.h" />
+    <ClInclude Include="..\src\pjsua2\pjsua2_client.h" />
+    <ClInclude Include="..\src\pjsua2\pjsua2_client_recv.h" />
+    <ClInclude Include="..\src\pjsua2\pjsua2_client_send.h" />
+    <ClInclude Include="..\src\pjsua2\pjsua2_handle.h" />
     <ClInclude Include="..\src\pjsua2\pjsua2_server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
