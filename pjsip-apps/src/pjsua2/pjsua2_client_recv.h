@@ -19,5 +19,5 @@ private:
 	Pj_Caching_Pool m_pj_caching_pool;
 	Pj_Pool         m_pj_pool;
 	Pj_Sock_Stream* m_pj_sock;
-	char m_buf[1024*1024];
+	unsigned char   m_buf[1024*1024];
 };

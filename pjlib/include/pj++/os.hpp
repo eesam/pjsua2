@@ -429,6 +429,10 @@ public:
 	RECURSE = PJ_MUTEX_RECURSE,
     };
 
+	Pj_Mutex()
+	{
+	}
+
     //
     // Default constructor will create default mutex.
     //

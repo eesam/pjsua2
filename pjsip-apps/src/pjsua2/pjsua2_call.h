@@ -15,7 +15,7 @@ public:
 		mAcc = (Pjsua2_Account *)&acc;
 	}
 	~Pjsua2_Call();
-    
+
 	virtual void onCallState(OnCallStateParam &prm);
 private:
 	Pjsua2_Account *mAcc;

@@ -4,10 +4,8 @@
 
 int main( int argc, char* argv[] )
 {
-	Pjsua2_Server server;
-	server.start();
-
+	getServerInstance()->start();
 	std::cin.get();
-	server.stop();
+	getServerInstance()->stop();
 	return 0;
 }
